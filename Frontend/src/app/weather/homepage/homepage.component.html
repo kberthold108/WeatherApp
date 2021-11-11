@@ -9,7 +9,7 @@
     </form>
 </div>
 <h1>Major cities</h1>
-<div class="container" *ngIf="cities$ | async as cities">
+<div class="container">
     <div *ngFor="let city of cities">
         <basic-cards [city]="city"></basic-cards>
     </div>

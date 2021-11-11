@@ -55,3 +55,7 @@ h1 {
 a:hover {
     box-shadow: 0 0 15px rgba(9, 0, 88, 0.75);
 }
+
+.error {
+    color: red;
+}

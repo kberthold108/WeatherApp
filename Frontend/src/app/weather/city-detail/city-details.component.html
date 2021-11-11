@@ -32,3 +32,7 @@
         <a mat-fab color="primary" routerLink="/homepage">Back</a>
     </div>
 </ng-container>
+
+<ng-container *ngIf="errorMessage">
+    <h1 class="error">{{errorMessage}}</h1>
+</ng-container>
