@@ -3,9 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 
 
 const routes: Routes = [
-    { path: "", loadChildren: () => import("../weather/weather.module").then(m => m.WeatherModule) },
-
-    { path: "dummy", loadChildren: () => import("../dummy-module/dummy.module").then(m => m.DummyModule) },
+    { path: "", loadChildren: () => import("../weather/weather.module").then(m => m.WeatherModule) }
 ]
 
 @NgModule({

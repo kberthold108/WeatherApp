@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Observable } from "rxjs";
 import { CityWeatherInformation } from "../../shared/models/weather.models";
-import { WeatherService } from "../../shared/weather.service";
+import { WeatherService } from "../weather.service";
 
 
 @Component({

@@ -1,11 +1,9 @@
 import { Injectable } from "@angular/core";
 import { EMPTY, from, Observable, of } from "rxjs";
-import { CityDashboard, CityWeatherInformation } from "./models/weather.models";
+import { CityDashboard, CityWeatherInformation } from "../shared/models/weather.models";
 
 
-@Injectable({
-    providedIn: "root"
-})
+@Injectable()
 export class WeatherService {
 
     getCitys(): Observable<CityDashboard[]> {

@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { CityDashboard } from "../../shared/models/weather.models";
-import { WeatherService } from "../../shared/weather.service";
+import { WeatherService } from "../weather.service";
 
 
 @Component({

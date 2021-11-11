@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Observable } from "rxjs";
 import { CityDashboard } from "../../shared/models/weather.models";
-import { WeatherService } from "../../shared/weather.service";
+import { WeatherService } from "../weather.service";
 
 
 
