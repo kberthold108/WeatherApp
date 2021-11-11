@@ -1,6 +1,7 @@
-const express = require("express");
-const cors = require('cors')
-const axios = require("axios").default;
+import { connectDb, Weather } from "./src/models/index.js";
+import express from 'express';
+import cors from "cors"
+import axios from "axios"
 const app = express();
 const port = 3000;
 
@@ -10,21 +11,14 @@ app.use(cors({
 app.use(express.json())
 
 app.get("/api/getCities", async (req, res) => {
-    if(database.length === 0) {
-        try {
-            await prepopulateDatabase();
-        } catch(err) {
-            console.log(err);
-            res.send(err);
-        }
-    }
-    res.json(database);
+    const cities = await Weather.find();
+    res.json(cities);
 })
 
-app.get("/api/getCity/:id", (req, res) => {
-    const {id} = req.params;
-    const foundCity = database.find(city => city.id === Number(id));
-    
+app.get("/api/getCity/:id", async (req, res) => {
+    const { id } = req.params;
+    const foundCity = await Weather.findOne({ id: id });
+
     if (!foundCity) {
         res.status(404).send(`City with id ${id} doesn't exist.`);
     }
@@ -32,12 +26,36 @@ app.get("/api/getCity/:id", (req, res) => {
 })
 
 app.post("/api/addCity", async (req, res) => {
-    console.log("Entiring addCity");
-    const {name} = req.body;
+    const { name } = req.body;
     try {
-        const response  = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=50881c1bb15318f7f608bd26e8861879`);
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=50881c1bb15318f7f608bd26e8861879`);
         const data = response.data;
-        database.push(data);
+        const cityWeather = new Weather({
+            weather: [{
+                id: data.weather[0].id,
+                main: data.weather[0].main,
+                description: data.weather[0].description,
+                icon: data.weather[0].icon
+            }],
+            main: {
+                temp: data.main.temp,
+                feels_like: data.main.feels_like,
+                temp_min: data.main.temp_min,
+                temp_max: data.main.temp_max,
+                pressure: data.main.pressure,
+                humidity: data.main.humidity,
+                sea_level: data.main.sea_level,
+                grnd_level: data.main.grnd_level
+            },
+            name: data.name,
+            id: data.id
+        });
+        cityWeather.save((err, city) => {
+            if (err) {
+                console.error(err);
+            }
+            console.log(`${city.name} saved to the database`);
+        });
         res.json(data);
     } catch (err) {
         if (err.response.status === 404) {
@@ -47,21 +65,53 @@ app.post("/api/addCity", async (req, res) => {
     }
 })
 
-app.listen(port, () => {
-    console.log("online on localhost:" + port);
+connectDb().then(async () => {
+    Weather.count(async function (err, count) {
+        if (count) {
+            return;
+        }
+        await prepopulateDatabase();
+    });
+    app.listen(port, () => {
+        console.log("online on localhost:" + port);
+    })
 })
 
 async function prepopulateDatabase() {
     for (const city of prePopulatedCities) {
         try {
-            const response  = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=50881c1bb15318f7f608bd26e8861879`);
+            const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=50881c1bb15318f7f608bd26e8861879`);
             const data = response.data;
-            database.push(data);
-        } catch(err) {
+            const cityWeather = new Weather({
+                weather: [{
+                    id: data.weather[0].id,
+                    main: data.weather[0].main,
+                    description: data.weather[0].description,
+                    icon: data.weather[0].icon
+                }],
+                main: {
+                    temp: data.main.temp,
+                    feels_like: data.main.feels_like,
+                    temp_min: data.main.temp_min,
+                    temp_max: data.main.temp_max,
+                    pressure: data.main.pressure,
+                    humidity: data.main.humidity,
+                    sea_level: data.main.sea_level,
+                    grnd_level: data.main.grnd_level
+                },
+                name: data.name,
+                id: data.id
+            })
+            cityWeather.save((err, city) => {
+                if (err) {
+                    console.error(err);
+                }
+                console.log(`${city.name} saved to the database`);
+            })
+        } catch (err) {
             throw Error(err);
         }
     }
 }
 
 const prePopulatedCities = ["Leipzig", "Phoenix", "London", "Paris", "New York"];
-const database = [];
