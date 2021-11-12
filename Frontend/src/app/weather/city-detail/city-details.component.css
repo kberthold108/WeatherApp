@@ -18,12 +18,24 @@
     margin-top: 2.4rem;
     height: 300px;
     width: 600px;
-    background-color: lightgrey;
+    background-color: #f3e9e9;
+    border-radius: 20px;
+    transition: all 125ms ease-in;
 }
+
+.example-card:hover {
+    background-color: #e0d7d7;
+    cursor: pointer;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.24); */
+    transform: scale(1.025);
+}
+
+
 i {
     margin-top: 2rem;
     font-size: 60px;
 }
+
 mat-card-header {
     padding-top: 1rem;
     justify-content: center;

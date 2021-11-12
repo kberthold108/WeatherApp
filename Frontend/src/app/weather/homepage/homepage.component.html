@@ -1,6 +1,6 @@
 <div class="search">
     <form #addCity="ngForm" (ngSubmit)="onClickSubmit(addCity.value)">
-        <mat-form-field appearance="outline" >
+        <mat-form-field appearance="outline">
             <mat-label>Add a City</mat-label>
             <input matInput color="primary" name="addCity" placeholder="Add a City" ngModel>
 
@@ -8,7 +8,6 @@
         <button color="primary" mat-raised-button type="submit" value="submit">Submit</button>
     </form>
 </div>
-<h1>Major cities</h1>
 <div class="container">
     <div *ngFor="let city of cities">
         <basic-cards [city]="city"></basic-cards>

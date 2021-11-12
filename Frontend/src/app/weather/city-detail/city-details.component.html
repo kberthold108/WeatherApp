@@ -1,12 +1,16 @@
 <ng-container *ngIf="city$ | async as city" id="test">
-    <div id="container" >
-        <mat-card class="example-card" >
+    <div id="container">
+        <mat-card class="example-card">
             <mat-card-header>
                 <div [ngSwitch]="city.weather[0].main" class="icon">
                     <i mat-card-avatar *ngSwitchCase="'Clear'">☼</i>
                     <i mat-card-avatar *ngSwitchCase="'Clouds'">☁</i>
                     <i mat-card-avatar *ngSwitchCase="'Rain'">🌧</i>
                     <i mat-card-avatar *ngSwitchCase="'Sun'">☀</i>
+                    <i mat-card-avatar *ngSwitchCase="'Mist'">🌫</i>
+                    <i mat-card-avatar *ngSwitchCase="'Fog'">🌫</i>
+                    <i mat-card-avatar *ngSwitchCase="'Snow'">☃</i>
+                    <i mat-card-avatar *ngSwitchCase="'Storm'">🌩</i>
                 </div>
                 <mat-card-title>
                     <h1>{{city.name}}</h1>
@@ -26,9 +30,9 @@
                     temp:"fahr"}}°F</span>
             </mat-card-content>
         </mat-card>
-       
+
     </div>
-    <div id="Back" >
+    <div id="Back">
         <a mat-fab color="primary" routerLink="/homepage">Back</a>
     </div>
 </ng-container>

@@ -5,13 +5,14 @@
             <i mat-card-avatar *ngSwitchCase="'Clouds'">☁</i>
             <i mat-card-avatar *ngSwitchCase="'Rain'">🌧</i>
             <i mat-card-avatar *ngSwitchCase="'Sun'">☀</i>
-
+            <i mat-card-avatar *ngSwitchCase="'Mist'">🌫</i>
+            <i mat-card-avatar *ngSwitchCase="'Fog'">🌫</i>
+            <i mat-card-avatar *ngSwitchCase="'Snow'">☃</i>
+            <i mat-card-avatar *ngSwitchCase="'Storm'">🌩</i>
         </div>
-
         <mat-card-title>
             <h1>{{city.name}}</h1>
         </mat-card-title>
-
     </mat-card-header>
     <mat-card-content id="card-content">
         <span>
@@ -21,9 +22,5 @@
             <span> Temperature:</span> <span>&nbsp;</span>
             <span>{{city.main.temp | temp:"cel"}} °C <span>&nbsp;</span> {{city.main.temp | temp:"fahr"}} °F</span>
         </div>
-
-
-
     </mat-card-content>
-
 </mat-card>
